@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+    <name>Payscrow_PayscrowGateway</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license uri="http://www.opensource.org/license/0sl-3.0.php">OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Payscrow Premium Escrow Service enables your store to easily connect with the PayScrow payment Service in Nigeria</summary>
+    <description>PayScrow is a unique escrow service that improves trusted payments between buyers and sellers.&#xD;
+Sellers are able to deliver products or services to buyers knowing that buyers funds have been secured by PayScrow and readily available upon satisfactory delivery of products or services and vice versa.&#xD;
+Now you can feel comfortable doing business with people anywhere, even if you don't know them.&#xD;
+Visit www.payscrow.net for more details.&#xD;
+&#xD;
+This extension prepares and enables your store for use with the PayScrow Escrow Services&#xD;
+&#xD;
+To use this plugin, simply install and input your unique access key as provided by PayScrow and set maximum delivery duration.</description>
+    <notes>Fixed Layout issues - 12/07/2017 </notes>
+    <authors><author><name>Chibuzor Ogbu</name><user>microsoftx</user><email>chibuzorogbu@gmail.com</email></author></authors>
+    <date>2017-08-07</date>
+    <time>19:26:59</time>
+    <contents><target name="magelocal"><dir name="Payscrow"><dir name="PayscrowGateway"><dir name="Block"><dir name="Form"><file name="PayscrowGateway.php" hash="f4f103aa74272ee70e7eb144522ad680"/></dir><dir name="Info"><file name="PayscrowGateway.php" hash="24847162732d64fc1c8cf4568615f70d"/></dir><file name=".DS_Store" hash="b6eba56a04e9caff2c39d13355fdb46f"/></dir><dir name="Helper"><file name="Data.php" hash="64bd3d9340724fe3c8f081b24a78649e"/></dir><dir name="Model"><file name="Payscrow.php" hash="5df12761b4c0593600b07636e15887b2"/></dir><dir name="controllers"><file name="PaymentController.php" hash="08bb0094b2ce922c532769ee85641518"/></dir><dir name="etc"><file name="config.xml" hash="f6116117ff3f658f33542a44137b060d"/><file name="system.xml" hash="70367833def5c857fb9cf8de4cb5e30b"/></dir><file name=".DS_Store" hash="4e84457476ad4d9334cc7ff2c0797d14"/></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Payscrow_PayscrowGateway.xml" hash="4d0e118a502e58cc62c6d3a7ea6578f6"/></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="payscrowgateway"><dir name="form"><file name="payscrowgateway.phtml" hash="0810423dc5f254eab9ba91586210fdca"/></dir><file name=".DS_Store" hash="09493498bfc5e4de7a9e4d5f8d19a23e"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.5.0</min><max>7.0.20</max></php></required></dependencies>
+</package>
