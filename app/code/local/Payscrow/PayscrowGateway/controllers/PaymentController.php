@@ -10,16 +10,83 @@
 class Payscrow_PayscrowGateway_PaymentController extends Mage_Core_Controller_Front_Action
 {
 
+    protected $gatewayUrl;
+    protected $isSandboxMode;
+    protected $staticConfig;
+
+    public function __construct(
+        \Zend_Controller_Request_Abstract $request,
+        \Zend_Controller_Response_Abstract $response,
+        array $invokeArgs = []
+    ) {
+        $this->isSandboxMode = Mage::getStoreConfig('payment/payscrowgateway/sandbox_mode', Mage::app()->getStore());
+
+        $this->staticConfig = simplexml_load_string(
+            file_get_contents(Mage::getConfig()->getModuleDir('etc', 'Payscrow_PayscrowGateway').DS.'config.xml'),
+            'Varien_Simplexml_Element'
+        );
+
+        $this->gatewayUrl = $this->isSandboxMode
+            ? (string) $this->staticConfig ->xpath( 'default/payment/payscrowgateway/gateway_demo_url')[0]
+            : (string) $this->staticConfig ->xpath( 'default/payment/payscrowgateway/gateway_url')[0];
+        parent::__construct($request, $response, $invokeArgs);
+    }
+
     /**
      * The redirect action is triggered by submitting/placing order
      */
     public function redirectAction()
     {
+
+        $responseUrlData = $this->staticConfig->xpath( 'default/payment/payscrowgateway/response_url');
+        $url = $responseUrlData[0];
+        $parseUrl = parse_url(trim($url));
+        $path = explode('/', $parseUrl['path'], 2);
+        $domain = trim(isset($parseUrl['host']) ? $parseUrl['host'] : array_shift($path));
+
+        if (!empty($domain)){
+            $url = ( isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER['HTTPS'] != 'off'
+                    ? "https"
+                    : "http" ) . "://" . ( ( isset( $_SERVER[ 'HTTP_HOST' ] ) && isset( $_SERVER[ 'SERVER_NAME' ] ) )
+                    ? ( str_ireplace( 'www.', '', $_SERVER[ 'SERVER_NAME' ] ) == str_ireplace(
+                            'www.', '', $_SERVER[ 'HTTP_HOST' ]
+                        ) )
+                        ? $_SERVER[ 'HTTP_HOST' ]
+                        : $_SERVER[ 'SERVER_NAME' ]
+                    : $_SERVER[ 'SERVER_NAME' ] ).'/' . (isset($parseUrl['host']) ? $parseUrl['path'] : $path[0]);
+            $responseUrl = $url;
+        }
+        else{
+            $url = ( isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER['HTTPS'] != 'off'
+                    ? "https"
+                    : "http" ) . "://" . ( ( isset( $_SERVER[ 'HTTP_HOST' ] ) && isset( $_SERVER[ 'SERVER_NAME' ] ) )
+                    ? ( str_ireplace( 'www.', '', $_SERVER[ 'SERVER_NAME' ] ) == str_ireplace(
+                            'www.', '', $_SERVER[ 'HTTP_HOST' ]
+                        ) )
+                        ? $_SERVER[ 'HTTP_HOST' ]
+                        : $_SERVER[ 'SERVER_NAME' ]
+                    : $_SERVER[ 'SERVER_NAME' ] ) . $url;
+            $responseUrl = $url;
+        }
+
+        $dta = [];
+
+        $dta['gatewayUrl'] = $this->gatewayUrl.'customer/transactions/start';
+        $dta['accessKey'] = $this->isSandboxMode
+            ? (string) $this->staticConfig->xpath( 'default/payment/payscrowgateway/access_demo_key')[0]
+            : Mage::getStoreConfig('payment/payscrowgateway/access_key', Mage::app()->getStore());
+
+        $dta['deliveryDuration'] = Mage::getStoreConfig('payment/payscrowgateway/max_delivery_duration', Mage::app()->getStore());
+
+        $dta['responseUrl'] = $responseUrl;
+
         $this->loadLayout();
+
         $block = $this->getLayout()->createBlock(
             'Mage_Core_Block_Template', 'payscrowgateway',
-            array( 'template' => 'payscrowgateway/form/payscrowgateway.phtml' )
-        );
+            array('template' => 'payscrowgateway/redirect.phtml')
+        )->assign($dta);
+
         $this->getLayout()->getBlock('content')->append($block);
         $this->renderLayout();
     }
@@ -41,7 +108,8 @@ class Payscrow_PayscrowGateway_PaymentController extends Mage_Core_Controller_Fr
             //                        lets validate the response is from payscrow
             if (isset($params[ 'transactionId' ]))
             {
-                $gatewayUrl = "https://www.payscrow.net/api/paymentconfirmation?transactionId={$params['transactionId']}";
+                $isTest =
+                $gatewayUrl = $this->gatewayUrl."api/paymentconfirmation?transactionId={$params['transactionId']}";
                 $result = $this->verifyRequest($gatewayUrl);
             }
             else

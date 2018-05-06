@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Payscrow_PayscrowGateway>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </Payscrow_PayscrowGateway>
     </modules>
 
@@ -106,8 +106,11 @@
                 <title>PayScrow - Premium Escrow Payment Service</title>
                 <allowspecific>0</allowspecific>
                 <payment_action>sale</payment_action>
-                <gateway_url>https://www.payscrow.net/customer/transactions/start</gateway_url>
+                <gateway_url>https://www.payscrow.net/</gateway_url>
+                <gateway_demo_url>http://ps.ofekpc.com/</gateway_demo_url>
                 <access_key></access_key>
+                <access_demo_key>d1e5a982-fa05-414b-803c-b197307e4918</access_demo_key>
+                <sandbox_mode>0</sandbox_mode>
                 <max_delivery_duration></max_delivery_duration>
                 <response_url>/payscrowgateway/payment/response</response_url>
             </payscrowgateway>

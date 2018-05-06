@@ -1,0 +1,41 @@
+<?php
+/**
+ * Created by Byteworks Limited.
+ * Author: Chibuzor Ogbu
+ * Date: 02/07/2017
+ * Time: 4:44 PM
+ */
+
+
+
+// Retrieve order
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+$order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+
+$i = 0;
+?>
+
+
+<form name="payscrowform" id="payment_form_post?>" method="post" action="<?= $this->_viewVars['gatewayUrl']?>">
+    <input type="hidden" name="Ref" value="<?php echo $orderId; ?>">
+    <input type="hidden" name="ResponseUrl" value="<?= $this->htmlEscape($this->_viewVars['responseUrl'])?>">
+    <input type="hidden" name="AccessKey" value="<?= $this->htmlEscape($this->_viewVars['accessKey'])?>" />
+    <input name="DeliveryDurationInDays" id="DeliveryDurationInDays" type="hidden" value="<?= $this->htmlEscape($this->_viewVars['deliveryDuration'])?>" />
+
+    <?php foreach($order->getAllVisibleItems() as $itemId => $item):?>
+
+        <input type="hidden" name="Items[<?= $i ?>].Name" id="Items[<?= $i ?>]_Name"  value="<?= $this->htmlEscape($item->getName());?>" />
+        <input type="hidden" name="Items[<?= $i ?>].Description" id="Items[<?= $i ?>]_Description"  value="<?= $this->htmlEscape($item->getProduct()->getDescription());?>" />
+        <input type="hidden" name="Items[<?= $i ?>].Price" id="Items[<?= $i ?>]_Price"  value="<?= $this->htmlEscape(number_format($item->getPrice(),2));?>" />
+        <input type="hidden" name="Items[<?= $i ?>].Quantity" id="Items[<?= $i ?>]_Quantity"  value="<?= $this->htmlEscape(number_format($item->getQtyOrdered(),0));?>" />
+        <input type="hidden" name="Items[<?= $i ?>].Deliverable" id="Items[<?= $i ?>]_Deliverable"  value="<?=  $item->getIsVirtual() == 0 ? 'true': 'false';?>" />
+        <input type="hidden" name="Items[<?= $i ?>].TaxAmount" id="Items[<?= $i ?>]_TaxAmount"  value="<?=  number_format($item->getTaxAmount(),2); ?>" />
+
+    <?php $i++; endforeach;?>
+    <input type="hidden" name="ShippingAmount" value="<?php echo number_format($order->getShippingAmount(),2); ?>">
+    <input type="hidden" name="GrandTotal" value="<?php echo number_format($order->getBaseGrandTotal(),2); ?>">
+</form>
+<script type="text/javascript">
+    console.log("plugged in");
+    document.payscrowform.submit();
+</script>

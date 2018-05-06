@@ -11,7 +11,9 @@ class Payscrow_PayscrowGateway_Block_Form_PayscrowGateway extends Mage_Payment_B
 {
     protected function _construct()
     {
+
         $this->setMethodLabelAfterHtml($this->getLabel());
+
         parent::_construct();
 
         return;
