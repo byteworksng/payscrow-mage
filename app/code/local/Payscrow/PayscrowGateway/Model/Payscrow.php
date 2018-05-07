@@ -18,8 +18,7 @@ class Payscrow_PayscrowGateway_Model_Payscrow extends Mage_Payment_Model_Method_
 
     public function getOrderPlaceRedirectUrl()
     {
-        return Mage::getUrl('payscrowgateway/payment/redirect', array('_secure' => true));
-        //return Mage::getUrl('payscrowgateway/payment/redirect', array('_secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ));
+        return Mage::getUrl('payscrowgateway/payment/redirect', array('_secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ));
     }
 
 }

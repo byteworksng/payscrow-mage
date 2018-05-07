@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <name>Payscrow_PayscrowGateway</name>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <stability>stable</stability>
     <license uri="http://www.opensource.org/license/0sl-3.0.php">OSL v3.0</license>
     <channel>community</channel>
@@ -18,13 +18,16 @@ Visit www.payscrow.net for more details.&#xD;
 This extension prepares and enables your store for use with the PayScrow Escrow Services. &#xD;
 &#xD;
 To use this plugin, simply install and input your unique access key as provided by PayScrow and set maximum delivery duration.</description>
-    <notes>Major refactoring and fixed issue with failing redirects to gateway after placing order - 07/05/2018&#xD;
+    <notes>&#xD;
+Minor changes to detect https on redirect - 07/05/2018&#xD;
+&#xD;
+Major refactoring and fixed issue with failing redirects to gateway after placing order - 07/05/2018&#xD;
 &#xD;
 Fixed Layout issues - 12/07/2017</notes>
     <authors><author><name>Chibuzor Ogbu</name><user>microsoftx</user><email>chibuzorogbu@gmail.com</email></author></authors>
-    <date>2018-05-06</date>
-    <time>23:41:00</time>
-    <contents><target name="mageetc"><dir name="modules"><file name="Payscrow_PayscrowGateway.xml" hash="4d0e118a502e58cc62c6d3a7ea6578f6"/></dir></target><target name="magelocal"><dir name="Payscrow"><dir name="PayscrowGateway"><dir name="Block"><dir name="Form"><file name="PayscrowGateway.php" hash="41bacea8c1aaa7e00dd76a802406f231"/></dir><dir name="Info"><file name="PayscrowGateway.php" hash="24847162732d64fc1c8cf4568615f70d"/></dir></dir><dir name="Helper"><file name="Data.php" hash="64bd3d9340724fe3c8f081b24a78649e"/></dir><dir name="Model"><file name="Payscrow.php" hash="8083edd9e98a96d6eb05f86587c64230"/></dir><dir name="controllers"><file name="PaymentController.php" hash="a57ff4ac8d542dd7bad13bf5903f4879"/></dir><dir name="etc"><file name="config.xml" hash="c5561896e798c16dc21d55abcfcc6e00"/><file name="system.xml" hash="9d32c96fce3a32a1641abd96d9721707"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="payscrowgateway"><file name="redirect.phtml" hash="c7080073a41a0c6e78d5e711a63b10a1"/></dir></dir></dir></dir></dir></target></contents>
+    <date>2018-05-07</date>
+    <time>07:47:51</time>
+    <contents><target name="mageetc"><dir name="modules"><file name="Payscrow_PayscrowGateway.xml" hash="4d0e118a502e58cc62c6d3a7ea6578f6"/></dir></target><target name="magelocal"><dir name="Payscrow"><dir name="PayscrowGateway"><dir name="Block"><dir name="Form"><file name="PayscrowGateway.php" hash="41bacea8c1aaa7e00dd76a802406f231"/></dir><dir name="Info"><file name="PayscrowGateway.php" hash="24847162732d64fc1c8cf4568615f70d"/></dir></dir><dir name="Helper"><file name="Data.php" hash="64bd3d9340724fe3c8f081b24a78649e"/></dir><dir name="Model"><file name="Payscrow.php" hash="7a4ff95c2cce4e24d73afe0797d00a61"/></dir><dir name="controllers"><file name="PaymentController.php" hash="a57ff4ac8d542dd7bad13bf5903f4879"/></dir><dir name="etc"><file name="config.xml" hash="c5561896e798c16dc21d55abcfcc6e00"/><file name="system.xml" hash="9d32c96fce3a32a1641abd96d9721707"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="payscrowgateway"><file name="redirect.phtml" hash="5c1ef0ad062422a3f0772bd1b9d93c12"/></dir></dir></dir></dir></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.5.0</min><max>7.1.4</max></php></required></dependencies>
 </package>
